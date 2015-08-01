@@ -1,0 +1,56 @@
+<h1>Vmstat - Шевченко</h1>
+<pre>
+echo "com - wrapper for vmstat - Report virtual memory statistics"
+echo "[0] Show without delay"
+echo "[1] Display the number of forks without delay"
+echo "[2] Means [1] with delay"
+echo "[3] Display stats"
+echo "[4] Display stats with rule"
+echo "[5] Show total memory"
+echo "[6] Show used memory"
+echo "[7] Show active memory"
+echo "[8] Show inactive memory"
+echo "[9] Show free memory"
+echo "[10] Show buffer memory"
+echo "[11] Show swap cache"
+echo "[12] Show total swap"
+echo "[13] Show used swap"
+echo "[14] Show free swap"
+echo "[15] Show boot time"
+echo "[-1] for quit"
+
+</pre>
+<div id="terminal" style="overflow:scroll;"></div>
+<script>
+var pr = "HELLO"
+    jQuery(function($, undefined) {
+    $('#terminal').terminal(function(command, term) {
+    if (command !== '') {
+    try {
+			$.ajax({
+				type: "GET",
+				url: "/vmstat/turner.json",
+				dataType: 'json',
+				data: {"vmstat": {"command":command} },
+				success: function(msg) {
+						pvalue = JSON.parse(JSON.stringify(msg));
+						for(var key in pvalue) {
+				term.echo(key + " =>\n" +  pvalue[key]);
+						}
+				},
+				error: function(msg) {alert(JSON.stringify(msg))}
+			});
+		} catch(e) {
+    term.error(new String(e));
+    }
+    } else {
+    term.echo('');
+    }
+    }, {
+    greetings: pr,
+    name: 'js_demo',
+    height: 200,
+    prompt: '$ ' });
+    });
+
+</script>

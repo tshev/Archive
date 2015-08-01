@@ -1,0 +1,21 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET           /                     controllers.Application.index
+
+# Map static resources from the /public folder to the /assets URL path
+GET           /assets/*file         controllers.Assets.at(path="/public", file)
+
+#
+GET           /welcome              controllers.Hello.index
+GET           /welcome/:name        controllers.Hello.custom_greating(name: String)
+
+GET           /blog                 controllers.Blog.index
+
+GET           /blog/:id             controllers.Blog.show(id: Int)
+GET           /blog/:id/edit        controllers.Blog.edit(id: Int)
+PATCH         /blog                 controllers.Blog.update(id: Int)
+POST          /blog/:id             controllers.Blog.create(id: Int)
+DELETE        /blog/:id             controllers.Blog.delete(id: Int)

@@ -1,0 +1,190 @@
+<style>
+/*
+ * Base structure
+  */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+
+
+	/*
+	 * Global add-ons
+	  */
+
+	.sub-header {
+		  padding-bottom: 10px;
+			  border-bottom: 1px solid #eee;
+	}
+
+	/*
+	 * Top navigation
+	  * Hide default border to remove 1px line.
+		 */
+	.navbar-fixed-top {
+		  border: 0;
+	}
+
+	/*
+	 * Sidebar
+	  */
+
+	/* Hide for mobile, show later */
+		.sidebar {
+			  display: none;
+		}
+		@media (min-width: 768px) {
+			  .sidebar {
+					    position: fixed;
+							top: 0px;
+									    bottom: 0;
+											    right: 0;
+													    z-index: 1000;
+															    display: block;
+																	    padding: 20px;
+																			    overflow-x: hidden;
+																					    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+																							    background-color: #f5f5f5;
+																									    border-right: 1px solid #eee;
+																											  }
+		}
+
+		/* Sidebar navigation */
+		.nav-sidebar {
+			  margin-right: -21px; /* 20px padding + 1px border */
+				  margin-bottom: 20px;
+					  margin-left: -20px;
+		}
+		.nav-sidebar > li > a {
+			  padding-right: 20px;
+				  padding-left: 20px;
+		}
+		.nav-sidebar > .active > a,
+		.nav-sidebar > .active > a:hover,
+		.nav-sidebar > .active > a:focus {
+			  color: #fff;
+				  background-color: #428bca;
+		}
+
+
+		/*
+		 * Main content
+		  */
+
+		.main {
+			  padding: 20px;
+		}
+		@media (min-width: 768px) {
+			  .main {
+					    padding-right: 40px;
+							    padding-left: 40px;
+									  }
+		}
+		.main .page-header {
+			  margin-top: 0;
+		}
+
+
+		/*
+		 * Placeholder dashboard ideas
+		  */
+
+		.placeholders {
+			  margin-bottom: 30px;
+				  text-align: center;
+		}
+		.placeholders h4 {
+			  margin-bottom: 0;
+		}
+		.placeholder {
+			  margin-bottom: 20px;
+		}
+		.placeholder img {
+			  display: inline-block;
+				  border-radius: 50%;
+		}
+		select, input { width: 90%;}
+</style>
+<%- model_class = IndicatorValue -%>
+        <div class="col-lg-9">
+          <%= bootstrap_flash %>
+          <%= link_to t('.new', :default => t("helpers.links.new")),
+            new_country_path,
+            :class => 'btn btn-primary' %>
+
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:country_id) %></th>
+      <th><%= model_class.human_attribute_name(:indicator_id) %></th>
+      <th><%= model_class.human_attribute_name(:value) %></th>
+      <th><%= model_class.human_attribute_name(:measure_datetime) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @indicator_values.each do |indicator_value| %>
+      <tr>
+        <td><%= link_to indicator_value.id, indicator_value_path(indicator_value) %></td>
+        <td><%= indicator_value.country.name %></td>
+        <td><%= indicator_value.indicator.name %></td>
+        <td><%= indicator_value.value %></td>
+        <td><%= indicator_value.measure_datetime %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_indicator_value_path(indicator_value), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      indicator_value_path(indicator_value),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_indicator_value_path,
+						:class => 'btn btn-primary' %>
+			        </div>
+        <div class="col-lg-3 sidebar">
+					<div class="well sidebar-nav nav nav-sidebar ">
+						<form>
+            						<h3>Special params</h3>
+						<h4>Country</h4>
+						<select multiple name="cid[]">
+							<% cida = 0 %>
+							<% Country.all.each do |c| %>
+								<option value="<%= c.id %>" <%= "selected" if cida == 0 && cida+=1 %>><%= c.name %></option>
+							<% end %>
+						</select>
+						<% select_tag :country_id, Country.all.map{ |c| [c.name, "#{c.id}" ]}, :multiple => true%>
+						<h4>Year</h4>
+						<select name="yid[]" multiple>
+							<% cida = 0 %>
+							<%= 1960.upto (Time.now.year) do |i| %>
+								<option value="<%= i %>" <%= "selected" if cida == 0 && cida+=1 %>><%= i %></option>
+							<% end %>
+						</select>
+								
+
+						<h4>Indicator name</h4>
+
+						<select multiple name="iid[]" style="max-width:100%;">
+							<% Indicator.all.each do |indicator| %>
+								<% cida = 0 %>
+							 <option value="<%= indicator.id %>" <%= "selected" if cida == 0 && cida+=1 %> > <%= indicator.name %></option>
+						 <% end %>	 
+						</select>	
+	
+						<h4>Limit</h4>
+						<input name="limit" value="<%= params[:limit]?params[:limit]:20 %>"/>
+						<br/><br/>
+						<input type="submit" value="Find" class="btn btn-default"/>
+					</form>
+			</div></div>

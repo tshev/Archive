@@ -1,0 +1,31 @@
+==README
+=== Ex.Search
+==== GNU Linux
+Search files at ex.ua.
+Steps are necessary to get the application up and running.
+---
+Installing rvm (skip if ruby is already isntalled)
+  gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+  \curl -sSL https://get.rvm.io | bash
+  rvm install ruby-2.1.4
+
+----
+Start with
+  rvm use ruby-2.1.4
+  gem install rails
+  git clone https://github.com/tshev/ex.search
+  cd ex.search
+  bundle install --without production
+  rails s
+
+
+Requirements
+
+* Ruby 2.1.4
+
+* rails 4.1.7
+
+* nokogiri
+
+* rest-client
+* postgres (for production)

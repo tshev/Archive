@@ -1,0 +1,10 @@
+Feature: Indicator Creation
+	In order to add Indicator
+	As a user of the system
+	I want insert insert field for the indicator to database
+
+	Scenario: adding of the one indicator
+		Given I'am at indicator_new_path	
+		And  I've enetered name of the indicator name and indicator code
+		When I submit form
+		Then Data from the form would be inserted

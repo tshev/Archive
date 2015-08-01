@@ -1,0 +1,2 @@
+module IndicatorValuesHelper
+end

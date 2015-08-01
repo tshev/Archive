@@ -1,0 +1,116 @@
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+$(window).scroll(function() {
+for (var i = 0; i < 50*1-1; i++) {
+if ($(window).scrollTop() > 4*i)
+$("#bar").attr("style", "top:" + (190- 4*i) + "px");
+}
+
+//else
+//$("#bar").attr("style", "");
+
+});
+</script>
+	<title></title>
+<style>
+#bar {
+	width: 830px;
+}
+ #content {
+width:830px;
+vertical-align: middle;
+//height: 1000px;
+;
+}
+#content > div 
+{
+width:830px;border-radius:10px; border: 2px rgba(233,233,235,0.01) groove;padding-top: 15px;
+//display: table-column;
+//vertical-align: middle;
+}
+#content > div > div
+{
+display: table-column;
+vertical-align: middle;
+height: 120px;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+#content > div{
+	margin-top: 50px;
+}
+
+#bar {
+position:fixed;
+background: #fff;
+z-index: 10000000000;
+border-bottom: 2px rgba(55,55,255,0.121) inset;
+}
+.jumbotron {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+</style>
+<script>
+var getFilms = function(json) {
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp = new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+//#  xmlhttp.open("GET","/json",true);
+//#  xmlhttp.send();
+
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.status==200)
+    {
+    document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+    }
+}
+  xmlhttp.open("GET","/json",true);
+  xmlhttp.send();
+
+}
+</script>
+<style>
+.col-md-1 { width: 85.333333px;float:left; }
+.col-md-2 { width: 170.666667px;float:left; }
+.col-md-3 { width: 256.000000px;float:left; }
+.col-md-4 { width: 341.333333px;float:left; }
+.col-md-5 { width: 426.666667px;float:left; }
+.col-md-6 { width: 512.000000px;float:left; }
+.col-md-7 { width: 597.333333px;float:left; }
+.col-md-8 { width: 682.666667px;float:left; }
+.col-md-9 { width: 768.000000px;float:left; }
+.col-md-10 { width: 853.333333px;float:left; }
+.col-md-11 { width: 938.666667px;float:left; }
+.col-md-12 { width: 1024.000000px;float:left; }
+.film {
+	width:1025px;
+	float:left;
+}
+</style>
+</head>
+
+<body onload="">
+{% for v in films %}
+<div class="film">
+			<div class="col-md-1">{{ v[0] }}</div>
+      <div class="col-md-2"><img src="http://cinema-kritik.ru/wp-content/uploads/2013/05/1252679955_zhizn-prekrasna.jpg" width="100px"/></div>
+      <div class="col-md-4"><h4>{{ v[1] }}</h4></div>
+      <div class="col-md-4"><h4>Categories</h4></div>
+      <div class="col-md-1"><h4>ID</h4></div>
+</div><br/>
+{% endfor %}
+
+</body>
+</html>

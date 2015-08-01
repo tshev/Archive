@@ -1,0 +1,8 @@
+<%= render 'form' %>
+<% @search_results.each do |red| %>
+	<div class="item">
+		<% s = red.encode("UTF-8", :invalid => :replace, :replace => '') %>
+		<%= s.html_safe %>
+	</div>
+	<br/>
+<% end %>

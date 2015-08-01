@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  country_id: 
+  indicator_id: 
+  value: 1.5
+  measure_datetime: 2014-12-23 19:52:25
+
+two:
+  country_id: 
+  indicator_id: 
+  value: 1.5
+  measure_datetime: 2014-12-23 19:52:25

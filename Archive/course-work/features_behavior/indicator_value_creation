@@ -1,0 +1,10 @@
+Feature: Indicator Creation
+	In order to add IndicatorValue
+	As a user of the system
+	I want insert insert field for the indicator to database
+
+	Scenario: adding of the one indicator
+		Given I have at least one country and one indicator at the database
+		And  I've chose the indicator and country and entered flaot value at the from
+		When I submit form
+		Then Data from the form would be inserted

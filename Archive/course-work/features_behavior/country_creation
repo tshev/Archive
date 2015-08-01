@@ -1,0 +1,10 @@
+Feature: Country Creation
+	In order to add counry
+	As a user of the system
+	I want insert country to database
+
+	Scenario: adding of the one counry
+		Given I'am at countries_new_path	
+		And  I've enetered name of the country name and country code
+		When I submit form
+		Then Data from the form would be inserted

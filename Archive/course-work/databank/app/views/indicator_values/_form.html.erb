@@ -1,0 +1,52 @@
+<%= form_for @indicator_value, :html => { :class => "form-horizontal indicator_value" } do |f| %>
+
+    <% if @indicator_value.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@indicator_value.errors.count, "error") %> prohibited this indicator_value from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @indicator_value.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :country_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :country_id, :class => 'form-control' %>
+    </div>
+    <%= error_span(@indicator_value[:country_id]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :indicator_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :indicator_id, :class => 'form-control' %>
+    </div>
+    <%= error_span(@indicator_value[:indicator_id]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :value, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :value, :class => 'form-control' %>
+    </div>
+    <%= error_span(@indicator_value[:value]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :measure_datetime, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :measure_datetime, :class => 'form-control' %>
+    </div>
+    <%= error_span(@indicator_value[:measure_datetime]) %>
+  </div>
+
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            indicator_values_path, :class => 'btn btn-default' %>
+
+<% end %>

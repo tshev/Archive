@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Full text image search</title>
+	<link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css"/>
+	<style>
+		#alert {
+			color: red:
+			background: #ccc;
+			padding: 10px;
+			top: 0;
+			left: 0;
+
+			width: 200px;
+			height: 100px;
+		}
+		#images {
+		//	overflow: scroll;
+		//	height: 300px;
+		}
+		.full-width {
+			width: 100%;
+		}
+		body {
+			background: #eee;
+			margin: 0;
+			padding: 0;
+		}
+
+		h1 {
+			text-align: center;
+			background: rgba(100, 100, 255, 1);
+			color: #fff;
+			padding: 5px;
+		}
+
+		form {
+			margin: 0 auto;
+		}
+		textarea {
+			width: 700px;;
+			height: 100px;
+			padding: 10px;
+		}
+
+		.text-center {
+			text-align: center;
+		}
+
+		.cntr {
+			margin: 0 auto;
+			width: 300px;
+		}
+
+		label {
+			font-style:italic;
+		}
+		.container {
+			box-shadow: 2px 2px #ccc;
+		}
+	</style>
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script>
+	setAlert = function(txt) {
+		$("#alert").html(txt);
+	}
+	getImages = function() {
+
+		$("#alert").show();
+		url = "/search";
+		txt = $("#message").val();
+		_xsrf = document.getElementsByName("_xsrf")[0].value;
+
+		setAlert("<p style='color:red;'Wait for a moment</p>");
+		$.post(url,
+			    {
+					text: txt,
+					_xsrf: _xsrf
+				},
+				function(data, status) { 
+				data = data.replace(/&quot;/ig,'"');
+				data = JSON.parse(data);
+				info = data['image_sources'];
+				element = document.getElementById("images");
+				for(i = 0; i < info.length; i++) {
+				element.innerHTML += "<img  height=\"160px\" style=\"padding: 1px; float:left;\" src='" + info[i] + "'/>";
+//				if(i + 1 % 2 == 0) element.innerHTML += "<br/>";
+					}
+
+				$("#alert").hide();
+				$("#home").hide();
+				}
+
+				);
+	}
+	</script>
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+		  <a class="navbar-brand" href="/" style="font-size: 24px; margin-top:20px; color: #fff; text-decoration:underline;">{{ escape(handler.settings["site"]) }}</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <form action="/search" class="navbar-form navbar-right" method="post">
+       {% raw xsrf_form_html() %}
+            <div class="form-group">
+              <textarea id="message" name="text" placeholder="Enter your text"></textarea>
+            </div>
+	<br/>
+	<!-- <button  class="btn btn-success btn-block" onclick=" getImages(); " >Find</button>-->
+            <a  class="btn btn-success btn-block" onclick=" getImages(); " >Find</a>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+<br/><br/><br/><br/><br/><br/><br/>
+<div id="images">
+<br/><br/>
+</div>
+<script>setTimeout(function(){ $("#alert").hide();}, 10);</script>
+</body>
+</html>

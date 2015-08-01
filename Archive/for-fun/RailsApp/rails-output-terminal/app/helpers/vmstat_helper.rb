@@ -1,0 +1,2 @@
+module VmstatHelper
+end
