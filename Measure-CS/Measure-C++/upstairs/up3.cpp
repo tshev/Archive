@@ -1,3 +1,5 @@
+// bad code
+
 #include <iostream>
 #include <numeric>
 #include <algorithm>
